@@ -4,16 +4,16 @@ const { uploadSurat, getSurat, getAll, updateSurat, deleteSurat, cariSurat, coun
 const upload = require('../middlewares/upload');
 const verifyToken = require('../middlewares/jwt_auth');
 
-router.post('/', verifyToken, upload.single('file_surat'), uploadSurat);
+router.post('/', upload.single('file_surat'), uploadSurat);
 
-router.get('/', verifyToken, getAll);
-router.get('/:id', verifyToken, getSurat);
-router.get('/search/surat', verifyToken, cariSurat);
+router.get('/', getAll);
+router.get('/:id', getSurat);
+router.get('/search/surat', cariSurat);
 
-router.put('/:id', verifyToken, upload.single('file_surat'), updateSurat);
+router.put('/:id', upload.single('file_surat'), updateSurat);
 
-router.delete('/:id', verifyToken, deleteSurat);
+router.delete('/:id', deleteSurat);
 
-router.get('/jumlah/surat', verifyToken, countSurat);
+router.get('/jumlah/surat', countSurat);
 
 module.exports = router;

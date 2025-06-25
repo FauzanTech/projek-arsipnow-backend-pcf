@@ -10,6 +10,17 @@ exports.uploadSurat = async (req, res) => {
 
         if (!file) return res.status(400).send('File harus diupload!');
 
+        const existing = await suratKeluar.findOne({ where: { no_surat: req.body.no_surat } });
+
+        if (existing) {
+            if (file) {
+                fs.unlink(path.join(__dirname, '../uploads/', file.filename), (err) => {
+                    if (err) console.error('Gagal hapus file:', err);
+                });
+            }
+            return res.status(400).json({ message: 'Nomor surat sudah ada!' });
+        }
+
         const suratBaru = await suratKeluar.create({
             no_surat,
             tgl_surat,
